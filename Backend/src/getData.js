@@ -4,7 +4,7 @@ const getData = async (option) => {
     try {
         const collection = mongoose.connection.collection(`${option}`);
         const data = await collection.find({}).toArray();
-        return data;   
+        return data;  
     } catch (error) {
         console.log("Error finding data", error);
         return null;

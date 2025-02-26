@@ -23,10 +23,6 @@ category: "Games Roulette",
 description: "Get redirected to a random online game – arcade, puzzle, or multiplayer, you never know!"
 },
 {
-category: "Meme Generator",
-description: "See a random meme from the internet or generate one using a meme API."
-},
-{
 category: "Weird Wikipedia",
 description: "Explore bizarre and unexpected Wikipedia articles that will blow your mind."
 },
@@ -86,7 +82,7 @@ description: "Get the latest news from around the world - from politics to entar
 
   const handleVisit = async () => {
       try {
-        if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites") {
+        if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites" || selectedOption.category === "Weird Wikipedia") {
           setIsWorking(true);
           const response = await axios.get("http://localhost:3000/getData", {
             params: { option: selectedOption.category }
