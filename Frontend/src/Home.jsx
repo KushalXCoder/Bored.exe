@@ -65,6 +65,7 @@ description: "Get the latest news from around the world - from politics to entar
   const [isLoading, setIsLoading] = useState(false);
   const [isWorking, setIsWorking] = useState(true);
   const [news, setNews] = useState([]);
+  const [changeColor, setChangeColor] = useState(false);
 
   let num = Math.floor(Math.random() * arr.length);
 
@@ -78,11 +79,17 @@ description: "Get the latest news from around the world - from politics to entar
     const selectedIndex = parseInt(e.target.value, 10);
     setSelectedOption(boredOptions[selectedIndex]);
     setIsWorking(true);
+    if(selectedOption.category === "Old Internet Nostalgia") {
+      setChangeColor(true);
+    }
+    else {
+      setChangeColor(false);
+    }
   };
 
   const handleVisit = async () => {
       try {
-        if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites" || selectedOption.category === "Weird Wikipedia") {
+        if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites" || selectedOption.category === "Weird Wikipedia" || selectedOption.category === "Old Internet Nostalgia") {
           setIsWorking(true);
           const response = await axios.get("http://localhost:3000/getData", {
             params: { option: selectedOption.category }
