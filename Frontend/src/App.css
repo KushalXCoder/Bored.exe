@@ -5,6 +5,10 @@
     --font-name: "Bangers", serif;
 }
 
+* {
+    scrollbar-width: none;
+}
+
 .name::after {
     content: "";
     position: absolute;
@@ -18,6 +22,40 @@
 
 .name:hover::after {
     width: 100%;
+}
+
+.visit {
+    overflow: hidden;
+    z-index: 1;
+}
+
+.visit::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    left: 0%;
+    top: 0%;
+    background-color: rgb(19, 160, 19);
+    z-index: -1;
+}
+
+.visit:hover::after {
+    animation: width 0.3s linear forwards;
+}
+
+.visit:not(:hover)::after {
+    animation: width1 0.3s linear forwards;
+}
+
+@keyframes width {
+    0% {width: 0%}
+    100% {width: 100%}
+}
+
+@keyframes width1 {
+    0% { width: 0%; background-color: blue}
+    100% { width: 100%; background-color: blue}
 }
 
 .loader {    
@@ -38,6 +76,6 @@
 }
 @keyframes l9 {
     33%  {background-position:    0% 33% ,100% 33% ,200% 33% }
-    66%  {background-position: -100%  66%,0%   66% ,100% 66% }
-    100% {background-position:    0% 100%,100% 100%,200% 100%}
+    66%  {background-position:   -100% 66%, 0% 66% ,100% 66% }
+    100% {background-position:    0% 100%,100% 100%,200% 100% }
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 import LinkedIn from "/linkedin.png";
 import GitHub from "/github.png";
 import Cross from "/cross.png";
+import Test from './Test';
 
 const Home = () => {
 
@@ -57,6 +58,10 @@ description: "Take a trip back in time with old-school websites, Flash games, an
 {
 category: "Fresh News",
 description: "Get the latest news from around the world - from politics to entartainment, sports to technology, from TIMES OF INDIA."
+},
+{
+category: "Test Knowledge",
+description: "The best to find out about your knowledge on different topics with a score of +10 on each correct answer and -10 on each wrong answer. Flex your SCORE !"
 }
 ];
 
@@ -65,7 +70,7 @@ description: "Get the latest news from around the world - from politics to entar
   const [isLoading, setIsLoading] = useState(false);
   const [isWorking, setIsWorking] = useState(true);
   const [news, setNews] = useState([]);
-  const [changeColor, setChangeColor] = useState(false);
+  const [quiz, setQuiz] = useState(false);
 
   let num = Math.floor(Math.random() * arr.length);
 
@@ -79,18 +84,13 @@ description: "Get the latest news from around the world - from politics to entar
     const selectedIndex = parseInt(e.target.value, 10);
     setSelectedOption(boredOptions[selectedIndex]);
     setIsWorking(true);
-    if(selectedOption.category === "Old Internet Nostalgia") {
-      setChangeColor(true);
-    }
-    else {
-      setChangeColor(false);
-    }
   };
 
   const handleVisit = async () => {
       try {
         if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites" || selectedOption.category === "Weird Wikipedia" || selectedOption.category === "Old Internet Nostalgia") {
           setIsWorking(true);
+          setQuiz(false);
           const response = await axios.get("http://localhost:3000/getData", {
             params: { option: selectedOption.category }
           });
@@ -100,14 +100,19 @@ description: "Get the latest news from around the world - from politics to entar
         else if(selectedOption.category === "Fresh News") {
           setIsWorking(true);
           setIsLoading(true);
+          setQuiz(false);
           setNews(true);
           const response = await axios.get("http://localhost:3000/getNews");
           setNews(response.data);
           setIsLoading(false);
           console.log(response.data);
         }
+        else if(selectedOption.category === "Test Knowledge") {
+          setQuiz(true);
+        }
         else {
           setIsWorking(false);
+          setQuiz(false);
         }
       } catch (error) {
         console.log("Error fetching data from backend", error);
@@ -123,7 +128,7 @@ description: "Get the latest news from around the world - from politics to entar
                 <div className="line bg-black h-20 w-2 animate-pulse"></div>
             </motion.h1>
             <motion.h3 initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 1.5, ease: "easeIn", delay: 0.6}} className='font-text text-2xl'>{arr[num]}</motion.h3>
-            <motion.button initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 1.5, ease: "easeIn", delay: 1}} className='font-text px-4 py-2 rounded bg-orange-400 mt-5 w-1/6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white cursor-pointer hover:text-black' whileHover={{scale: 0.9}} whileTap={{scale: 1.01}} onClick={(e) => handleClick(e)}>Get Started</motion.button>
+            <motion.button className='font-text px-4 py-2 rounded bg-orange-400 mt-5 w-1/6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white cursor-pointer hover:text-black' whileHover={{scale: 0.9}} whileTap={{scale: 1.01}} onClick={(e) => handleClick(e)}>Get Started</motion.button>
             <AnimatePresence>
             {isVisible && (
                 <motion.div initial={{scale: 0, opacity: 0}} animate={{scale: 1, opacity: 1}} exit={{scale: 0, opacity: 0}} transition={{duration: 0.7, ease: "easeOut"}} className="together flex flex-col absolute bottom-1/6 gap-3 w-2/4">
@@ -139,7 +144,7 @@ description: "Get the latest news from around the world - from politics to entar
                       ))}
                     </select>
                     <motion.button 
-                      className='bg-blue-500 w-1/6 rounded-md font-text text-white cursor-pointer'
+                      className='visit bg-blue-500 w-1/6 rounded-md font-text text-white cursor-pointer relative'
                       whileHover={{ scale: 0.9 }} 
                       whileTap={{ scale: 1.01 }}
                       onClick={handleVisit}
@@ -174,6 +179,9 @@ description: "Get the latest news from around the world - from politics to entar
                   </div>
                 ))}
               </motion.div>
+            )}
+            {quiz && (
+              <Test/>
             )}
             </AnimatePresence>
         </div>
