@@ -28,26 +28,6 @@ category: "Weird Wikipedia",
 description: "Explore bizarre and unexpected Wikipedia articles that will blow your mind."
 },
 {
-category: "Random YouTube",
-description: "Watch a completely random YouTube video – could be hilarious, educational, or just weird."
-},
-{
-category: "Reddit Chaos",
-description: "Jump into a random Reddit thread from crazy subreddits like r/AITA, r/Confessions."
-},
-{
-category: "AI Madness",
-description: "See AI-generated memes, images, conversations, or even bizarre AI-written stories."
-},
-{
-category: "Learn Something Cool",
-description: "Get a fun fact, life hack, or an interesting piece of trivia you probably didn’t know."
-},
-{
-category: "Random TED Talk",
-description: "Watch an inspiring or thought-provoking TED Talk chosen at random."
-},
-{
 category: "Useless Websites",
 description: "Visit a completely pointless yet oddly satisfying website."
 },
@@ -61,7 +41,7 @@ description: "Get the latest news from around the world - from politics to entar
 },
 {
 category: "Test Knowledge",
-description: "The best to find out about your knowledge on different topics with a score of +10 on each correct answer and -10 on each wrong answer. Flex your SCORE !"
+description: "+10 for correct and -10 for wrong, let's check how far you can go across various domains !"
 }
 ];
 
@@ -91,7 +71,7 @@ description: "The best to find out about your knowledge on different topics with
         if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites" || selectedOption.category === "Weird Wikipedia" || selectedOption.category === "Old Internet Nostalgia") {
           setIsWorking(true);
           setQuiz(false);
-          const response = await axios.get("http://localhost:3000/getData", {
+          const response = await axios.get(process.env.VITE_BACKEND_URL + "/getData", {
             params: { option: selectedOption.category }
           });
           const num = Math.floor(Math.random() * response.data.length);
@@ -102,7 +82,7 @@ description: "The best to find out about your knowledge on different topics with
           setIsLoading(true);
           setQuiz(false);
           setNews(true);
-          const response = await axios.get("http://localhost:3000/getNews");
+          const response = await axios.get(process.env.VITE_BACKEND_URL + "/getNews");
           setNews(response.data);
           setIsLoading(false);
           console.log(response.data);
@@ -127,8 +107,8 @@ description: "The best to find out about your knowledge on different topics with
                 Bored.exe
                 <div className="line bg-black h-20 w-2 animate-pulse"></div>
             </motion.h1>
-            <motion.h3 initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 1.5, ease: "easeIn", delay: 0.6}} className='font-text text-2xl'>{arr[num]}</motion.h3>
-            <motion.button className='font-text px-4 py-2 rounded bg-orange-400 mt-5 w-1/6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white cursor-pointer hover:text-black' whileHover={{scale: 0.9}} whileTap={{scale: 1.01}} onClick={(e) => handleClick(e)}>Get Started</motion.button>
+            <motion.h3 initial={{opacity: 0, scale: 0}} animate={{opacity: 1, scale: 1}} transition={{duration: 0.5, ease: "easeIn", delay: 0.6}} className='font-text text-2xl'>{arr[num]}</motion.h3>
+            <motion.button className='font-text px-4 py-2 rounded bg-orange-400 mt-5 w-1/6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white cursor-pointer hover:text-black' initial={{opacity: 0, scale: 0}} animate={{opacity: 1, scale: 1, transition:{duration: 1, ease: "easeIn"}}} whileHover={{scale: 0.9}} whileTap={{scale: 1.01}} onClick={(e) => handleClick(e)}>Get Started</motion.button>
             <AnimatePresence>
             {isVisible && (
                 <motion.div initial={{scale: 0, opacity: 0}} animate={{scale: 1, opacity: 1}} exit={{scale: 0, opacity: 0}} transition={{duration: 0.7, ease: "easeOut"}} className="together flex flex-col absolute bottom-1/6 gap-3 w-2/4">
