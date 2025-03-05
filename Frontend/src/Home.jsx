@@ -71,7 +71,7 @@ description: "+10 for correct and -10 for wrong, let's check how far you can go 
         if(selectedOption.category === "Games Roulette" || selectedOption.category === "Useless Websites" || selectedOption.category === "Weird Wikipedia" || selectedOption.category === "Old Internet Nostalgia") {
           setIsWorking(true);
           setQuiz(false);
-          const response = await axios.get(process.env.VITE_BACKEND_URL + "/getData", {
+          const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/getData", {
             params: { option: selectedOption.category }
           });
           const num = Math.floor(Math.random() * response.data.length);
@@ -82,7 +82,7 @@ description: "+10 for correct and -10 for wrong, let's check how far you can go 
           setIsLoading(true);
           setQuiz(false);
           setNews(true);
-          const response = await axios.get(process.env.VITE_BACKEND_URL + "/getNews");
+          const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/getNews");
           setNews(response.data);
           setIsLoading(false);
           console.log(response.data);
