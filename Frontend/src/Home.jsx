@@ -74,18 +74,20 @@ description: "+10 for correct and -10 for wrong, let's check how far you can go 
           const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/getData", {
             params: { option: selectedOption.category }
           });
+          console.log(response.data);
           const num = Math.floor(Math.random() * response.data.length);
           window.open(`${response.data[num].url}`, '_blank');
         }
         else if(selectedOption.category === "Fresh News") {
-          setIsWorking(true);
-          setIsLoading(true);
-          setQuiz(false);
-          setNews(true);
-          const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/getNews");
-          setNews(response.data);
-          setIsLoading(false);
-          console.log(response.data);
+          setIsWorking(false);
+          // setIsWorking(true);
+          // setIsLoading(true);
+          // setQuiz(false);
+          // setNews(true);
+          // const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/getNews");
+          // setNews(response.data);
+          // setIsLoading(false);
+          // console.log(response.data);
         }
         else if(selectedOption.category === "Test Knowledge") {
           setQuiz(true);
